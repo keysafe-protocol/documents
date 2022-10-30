@@ -1,53 +1,81 @@
-# Keysafe Protocol
+# Keysafe Introduction
+
+## The background
+
+Managing Web3 accounts could be cumbersome, unfriendly to users, and vulnerable to hacking. Based on research by ChainAnalysis, the number of lost bitcoins due to account loss reached 3.79 million($150 billion).
+
+To use Web2 social login is user-friendly, but it is trust needed and is vulnerable to Web2 identity exposure.
+
+![Root problem](https://github.com/keysafe-protocol/documents/blob/main/pictures/behind-problem.png?raw=true)
 
 ## What is Keysafe
 
-Account systems in web2 and web3 are natively **separate**, technically **unconnected**, and even inherently in **conflict** with their values.
+Keysafe Protocol is a missing layer thatconnects users' Web2 and Web3 accounts in a decentralized, verifiable, and private way. With the connection, users can access their Web3 assets and Dapps through Web2 verification such as Google OAuth and Email verification.
 
-Problems follow as a consequence:
+![What is Keyafe](https://github.com/keysafe-protocol/documents/blob/main/pictures/solution.png?raw=true)
 
-1. Managing Web3 accounts is particularly unfriendly, inconvenient and burdensome to normal users.
-2. Web3 accounts are vulnerable to hacking and private key loss, both of which are hardly recoverable.
-3. Web3 Dapps cannot access users' Web2 profiles and social links because of huge gaps between the two account systems.
+## Technical modules
 
-![](https://res.cloudinary.com/devpost/image/fetch/s--VaLB3J_z--/c_limit,f_auto,fl_lossy,q_auto:eco,w_900/https://github.com/shuttle-protocol/documents/blob/main/problems.png%3Fraw%3Dtrue)
+### Unilogin
 
-The Solution:
+Unilogin is a SaaS of Account Abstraction based on Keysafe Network. It helps users to access their Web3 assets and Dapps through Web2 verification such as Google OAuth and Email verification.
 
-**Keysafe** is a decentralized protocol that focuses on connecting a user's Web2 accounts, along with implicit social links, to his or her Web3 accounts. Keysafe ensures that such connections will be built and maintained in a trustless, verifiable yet privacy-preserving way.
+Try it at https://unilogin-demo.vercel.app/#/login-home
 
-![](https://github.com/shuttle-protocol/documents/blob/main/twosides.png?raw=true)
+### Keysafe Node
 
-## Core Technologies
+A Keysafe Node is the basic unit of the Keysafe network.  Keysafe network consisted of nodes from several institutions in it's early stage.  In the future, the number of nodes will gradually expand with the increase of the security and stability of Keysafe network.
 
-* **Smart Contract**: This decentralized, trustless network are managed by Smart Contracts. Not a single entity will be capable of committing malicious attacks. The smart contract prototypes on each chain are under [this repo](https://github.com/shuttle-protocol/contracts).
+### On-chian
 
-* **Trusted Execution Environment**: TEE guarantees secrets and code to be protected with respect to confidentiality and integrity from a hardware level. Even the node runner cannot acquire any sensitive data from the network. Check the TEE code [here](https://github.com/shuttle-protocol/ks-sgx).
+Keysafe deployed smart contracts on several Blockchain ecosystems, such as, Aptos, Near Polygon, Solana, and Near Networks. The contract provides the registration function of the Keysafe node that allows users to verify the environment of the service node and the service result.
 
-* **Secret Sharing Schemes & MPC**: Private keys and authentication data are split, encrypted and distributed into the network to ensure extra safety and robustness for users. Potential attacker need support from more than 2/3 of the network nodes. Check the secret sharing code [here](https://github.com/shuttle-protocol/keysafe-front).
+### TEE
 
-* **Decentralized OAuth**: Decentralizes the conventional OAuth process inside TEE and builds connections between Web2 and Web3 accounts in a trustless, secure and private manner.
+Keysafe protocol uses Trusted Execution Environment (TEE) technology to manage user private keys segments. TEE is a hardware technology that be laveraged on each Keysafe node. The TEE protects the code Keysafe protocol from being tampered by the node, and ensures that the data in TEE enclave is not stealed by the node.
 
-![](https://github.com/shuttle-protocol/documents/blob/main/DAuth.png?raw=true)
+__The Weaknesses of TEE technology__
 
-## Production Plan
+TEE can ensure that its internal code works correctly, but there are still a few functions that TEE does not support. They are:
 
-### Decentralized Verifier (dVerifier)
+* Unable to initiate a network request
+* Unable to access external storage
+* Cannot verify execution of code deployed outside of TEE
 
-In the first product phase, Keysafe will provide a light-weight decentralized social link verification service, **dVerifier**. 
+These restrictions make it impossible for TEE to verify a user's Web2.0 account identity directly. Imagine that a user's private key is stored in the TEE of a server named "Key Unsafe", and we want the user to be identified by verifying his Google account and then allowing him to invoke the private key to sign transactions. However, TEE cannot access the network, so even if the user  passed the Google authentication through the OAuth, he only proves his identity to the "Key Unsafe" server, and The TEE determines whether to sign transactions only through the authentication result returned by the "Key Unsafe" server. In this mode, the TEE cannot determine whether the program outside the TEE, namely "Key Unsafe" server, is honestly implementing the Google account verification and returning the correct result. In that case, "Key Unsafe" server can launch "man-in-the-middle attack" to steal the user's private key from TEE.
 
-Recently, Web3 projects, especially those with regards to Social Networks, DIDs, On-chain Credentials and Community/Marketing Campaigns, have seen growing needs to bring in users' Web2 accounts, i.e. Twitter, Github and Email, to their Web3 accounts. In such scenarios, users are risking exposing their privacy, on-line profiles and social links to many untrusted parties as well as giving away sovereignty and ownership of their valuable personal data.
+On the other hand, there are many physical attacks aimed at TEE directly, such as [voltpillager attack](https://zt-chen.github.io/voltpillager/)which makes it possible to break the security zone and steal privacy data that protected by TEE.
 
-This is a truly game changer to account verification, especially in cross-web scenarios. With Keysafe's **dVerifier**, users can have their social links verified by third parties even without trusting these third parties.
+### DAuth
 
-### Keysafe SDK
+In order to solve the problem that TEE can not directly initiate network calls, Keysafe created DAuth technology. DAuth rewrites the Https protocol to split it into an Http part that is responsible for network traffic (running on top of the Node server, outside the TEE security zone) and an SSL part that is responsible for establishing the private channels (running inside the TEE security zone). This split and reconstraction allows the TEE to make Https calls to external apps such as Google and Twitter through Node, while ensuring that the Node cannot see the transmission of information between the TEE and the target App. 
 
-After **dVerifier** gains its momentums and accumumates greater user base, we will be rolling out a new module **Keysafe SDK**, tailored for Web3 Apps/Dapps with easy integration. This SDK would help Web3 Apps/Dapps to adopt **Social Login** feature. 
+![dauth](https://github.com/keysafe-protocol/documents/blob/main/pictures/dauth.png?raw=true)
 
-With **Keysafe SDK**, Apps/Dapps users will be able to log in to the application simply by anthenticating their Web2 accounts, i.e. Google accounts and emails, after they have binded their social links to Web3 accounts (which should be previously registered and verified through **dVerifier**).
+### MPC and BLS
 
-### Web3 Portal
+Keysafe introduced BLS and MPC technologies to defend against physical based attacks on TEE. The users' private key will be generated in triplicate by the BLS algorithm. At the time of registration, each BLS sigment will be registered by the user through DAuth to specify an associated social account, such as GitHub or email, and stored in the TEE of different nodes. 
 
-**Web3 Portal** will be an ultimate navigation panel for Web3 Dapps. It differentiate itself from other wallet or asset management tool's navigation menu in the sense that **Web3 Portal** will simpify user's private key management, which contributes to an economy of scale inherently from its user experience. 
+MPC technology provides the function that the three BLS segments are directly generated in different node TEE. This design makes it impossible for any node to get any useful information by attacking TEE in physical methods. In the meantime, the node will face penalties from the Keysafe contract and lose reputation and staking assets. Therefore, the cost of attack against TEE is huge and the benefit is 0, so the node has no motivation to attack the TEE.
 
-With **Web3 Portal**, users will be able to gain access with their Web2 accounts to any DApps included in the navigation panel, in a wonderfully trustless and private manner. This solution addresses the big problem of private key management for 50 million new Web3 users every year and will act as one of the very first stop for these new users to enter the Web3 space.
+## The architechures of Unilogin
+
+Unilogin will provide services in different forms for different customers. The main modes are as follows:
+
+__Decentralized custody__
+
+ In this mode, customers use the Unilogin SDK, and the user account is divided into three parts and saved in three different Keysafe nodes. The development costs is lower and it's easier for customers to integration.
+
+![Decentralized Custody](https://github.com/keysafe-protocol/documents/blob/main/pictures/decentralizedcustody.png?raw=true)
+
+__Non-custody__
+
+In this mode, the Customer will build a Keysafe Node by itself, and the three segments are respectively saved in Keyafe Network, Customer Node, and user Device.
+
+![Non-Custody](https://github.com/keysafe-protocol/documents/blob/main/pictures/noncustody.png?raw=true)
+
+__Customer custody__
+
+Unilogin's customers also include asset hosting platforms that maintain their own clusters of services. DAuth technology can help these customers expand the way their users can control their assets and improve the usability and security of their systems. Such customers tend to prefer to use their own clusters on which to deploy the Unilogin DAuth module.
+
+![Customer Custody](https://github.com/keysafe-protocol/documents/blob/main/pictures/customercustody.png?raw=true)
