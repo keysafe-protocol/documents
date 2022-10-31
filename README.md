@@ -10,7 +10,7 @@ To use Web2 social login is user-friendly, but it is trust needed and is vulnera
 
 ## What is Keysafe
 
-Keysafe Protocol is a missing layer thatconnects users' Web2 and Web3 accounts in a decentralized, verifiable, and private way. With the connection, users can access their Web3 assets and Dapps through Web2 verification such as Google OAuth and Email verification.
+Keysafe Protocol is a missing layer that connects users' Web2 and Web3 accounts in a decentralized, verifiable, and private way. With the connection, users can access their Web3 assets and Dapps through Web2 verification such as Google OAuth and Email verification.
 
 ![What is Keyafe](https://github.com/keysafe-protocol/documents/blob/main/pictures/solution.png?raw=true)
 
@@ -18,7 +18,7 @@ Keysafe Protocol is a missing layer thatconnects users' Web2 and Web3 accounts i
 
 ### Unilogin
 
-Unilogin is a SaaS of Account Abstraction based on Keysafe Network. It helps users to access their Web3 assets and Dapps through Web2 verification such as Google OAuth and Email verification.
+Unilogin is a SaaS solution based on Keysafe Network. It helps users to access their Web3 assets and Dapps through Web2 verification such as Google OAuth and Email verification.
 
 Try it at https://unilogin-demo.vercel.app/#/login-home
 
@@ -58,7 +58,7 @@ Keysafe introduced BLS and MPC technologies to defend against physical based att
 
 MPC technology provides the function that the three BLS segments are directly generated in different node TEE. This design makes it impossible for any node to get any useful information by attacking TEE in physical methods. In the meantime, the node will face penalties from the Keysafe contract and lose reputation and staking assets. Therefore, the cost of attack against TEE is huge and the benefit is 0, so the node has no motivation to attack the TEE.
 
-## The architechures of Unilogin
+## The service modes of Unilogin
 
 Unilogin will provide services in different forms for different customers. The main modes are as follows:
 
