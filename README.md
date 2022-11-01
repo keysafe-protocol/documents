@@ -58,6 +58,21 @@ Keysafe introduced BLS and MPC technologies to defend against physical-based att
 
 MPC technology provides the function that the three BLS segments are directly generated in different node TEE. This design makes it impossible for any node to get any useful information by attacking TEE in physical methods. In the meantime, the node will face penalties from the Keysafe contract and lose reputation and staking assets. Therefore, the cost of attack against TEE is huge and the benefit is 0, so the node has no motivation to attack the TEE.
 
+## The attacks and security model
+
+Keysafe proposes a Keyless user experience. Users do not have direct contact with Keys when using Keysafe to log in DApps and send transactions. In Keysafe, the attacks mainly come from: 
+
+1. The hacker is the node itself and tries to attack its TEE; 
+2. Hacker attacks users' Web2.0 accounts; 
+3. Several Web2.0 companies misbehave together at the same time.
+
+For attack 1: When a node attacks a TEE, the TEE would be provisioned or destroyed, which will feed back to the on-chain contract. The assets and reputation of the node are hit (Keysafe will be a super-node mode in the early stage), and since each account has only 1/3 of the Segment in the node, the benefit of the node launching an attack is zero and the cost is huge.
+
+For attack 2: Web2.0 users and applications know how to protect these Web2.0 accounts, much more than they do in Web3.0. On the other hand, if a user's multiple major Web2.0 accounts are stolen, then his non-crypto assets and even his life and property have been seriously threatened, which is a threat beyond the Crypto things (such kind of threats also include kidnapping, restriction of personal freedom, etc.).
+
+For attack3: Each account of a user is divided into three BLS segments, and each segment is associated with a Web2.0 authentication method and stored in a different node's TEE. A threat can be formed only when two Segments are simultaneously manipulated by attackers. However, any misbehaved Web2.0 server can only control one segment at most and have no impact on user accounts. 
+ETH has a large number of nodes hosted in AWS, Azure, and other cloud services. Therefore, we consider a protocol that uses the services of multiple Web2.0 vendors is decentralized.
+
 ## The service modes of Unilogin
 
 Unilogin will provide services in different forms for different customers. The main modes are as follows:
