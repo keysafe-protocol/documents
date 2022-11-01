@@ -56,9 +56,10 @@ To solve the problem that TEE can not directly initiate network calls, Keysafe c
 
 Keysafe introduced BLS and MPC technologies to defend against physical-based attacks on TEE. The users' private segments will be generated in triplicate by the BLS algorithm. At the time of registration, each BLS segment will be registered by the user through DAuth to specify an associated social account, such as GitHub or email, and stored in the TEE of different nodes. 
 
-MPC technology provides the function that the three BLS segments are directly generated in different node TEE. This design makes it impossible for any node to get any useful information by attacking TEE in physical methods. In the meantime, the node will face penalties from the Keysafe contract and lose reputation and staking assets. Therefore, the cost of attack against TEE is huge and the benefit is 0, so the node has no motivation to attack the TEE.
+MPC technology provides the function that the three BLS segments are directly generated in different node TEE. This design makes it impossible for any node to get any useful information by attack
+ing TEE in physical methods. In the meantime, the node will face penalties from the Keysafe contract and lose reputation and staking assets. Therefore, the cost of attack against TEE is huge and the benefit is 0, so the node has no motivation to attack the TEE.
 
-## The attacks and security model
+## The attacks and security models
 
 Keysafe proposes a Keyless user experience. Users do not have direct contact with Keys when using Keysafe to log in DApps and send transactions. In Keysafe, the attacks mainly come from: 
 
