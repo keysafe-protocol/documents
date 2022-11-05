@@ -56,8 +56,7 @@ To solve the problem that TEE can not directly initiate network calls, Keysafe c
 
 Keysafe introduced BLS and MPC technologies to defend against physical-based attacks on TEE. The users' private segments will be generated in triplicate by the BLS algorithm. At the time of registration, each BLS segment will be registered by the user through DAuth to specify an associated social account, such as GitHub or email, and stored in the TEE of different nodes. 
 
-MPC technology provides the function that the three BLS segments are directly generated in different node TEE. This design makes it impossible for any node to get any useful information by attack
-ing TEE in physical methods. In the meantime, the node will face penalties from the Keysafe contract and lose reputation and staking assets. Therefore, the cost of attack against TEE is huge and the benefit is 0, so the node has no motivation to attack the TEE.
+MPC technology provides the function that the three BLS segments are directly generated in different node TEE. This design makes it impossible for any node to get any useful information by attacking TEE in physical methods. In the meantime, the node will face penalties from the Keysafe contract and lose reputation and staking assets. Therefore, the cost of attack against TEE is huge and the benefit is 0, so the node has no motivation to attack the TEE.
 
 ## The attacks and security models
 
@@ -73,6 +72,42 @@ For attack 2: Web2.0 users and applications know how to protect these Web2.0 acc
 
 For attack3: Each account of a user is divided into three BLS segments, and each segment is associated with a Web2.0 authentication method and stored in a different node's TEE. A threat can be formed only when two Segments are simultaneously manipulated by attackers. However, any misbehaved Web2.0 server can only control one segment at most and have no impact on user accounts. 
 ETH has a large number of nodes hosted in AWS, Azure, and other cloud services. Therefore, we consider a protocol that uses the services of multiple Web2.0 vendors is decentralized.
+
+## The adoption plan
+
+### DAuth SDK
+
+__Functions__
+
+* Web2.0 account authentication
+* MPC/BLS Signature
+
+__Target custmors__
+
+* EIP 4337 Wallets
+* Asset custody services
+* Social Oracles and other DID projects
+
+__Goals__
+
+* To build a reputation in Web3.0 security domain
+* Be the standard of Web2.0 account authentication in Web3.0
+
+### Unilogin SDK
+
+__Functions__
+
+* All the functions of DAuth SDK
+* Decentralized key custody
+
+__Target custmors__
+
+* DApps who need to involve Web2.0 SSO user experience;
+
+__Goals__
+
+* Expand the network effects of Keysafe.
+* Be the standard of SSO in Web3.0
 
 ## The service modes of Unilogin
 
@@ -92,6 +127,6 @@ In this mode, the Customer will build a Keysafe Node by itself, and the three se
 
 __Customer custody__
 
-Unilogin's customers also include asset hosting platforms that maintain their own clusters. DAuth technology can help these customers expand the way their users can control their assets and improve the usability and security of their systems. Such customers tend to prefer to use their clusters on which to deploy the Unilogin DAuth module.
+Unilogin's customers also include asset hosting platforms that maintain their clusters. DAuth technology can help these customers expand the way their users can control their assets and improve the usability and security of their systems. Such customers tend to prefer to use their clusters on which to deploy the Unilogin DAuth module.
 
 ![Customer Custody](https://github.com/keysafe-protocol/documents/blob/main/pictures/customercustody.png?raw=true)
