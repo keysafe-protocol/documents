@@ -3,7 +3,7 @@ This is the guidance for the users to walk through the [demo DApp of Keysafe](ht
 ## Main features
 
 ### 1. Login
-Go to [demo DApp of Keysafe](https://demo.keysafe.network) and input an email you are using.
+Go to [demo DApp of Keysafe](https://keysafe-front-keysafe.vercel.app/#/) and input an email you are using.
 
 ![](https://github.com/keysafe-protocol/documents/blob/main/demo_flow/enter.png?raw=true)
 
