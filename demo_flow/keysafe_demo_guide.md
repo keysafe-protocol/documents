@@ -1,4 +1,4 @@
-This is the guidance for the users to walk through the [demo DApp of Keysafe](https://demo.keysafe.network).
+This is the guidance for the users to walk through the [demo DApp of Keysafe](https://keysafe-front-keysafe.vercel.app/#/).
 
 ## Main features
 
